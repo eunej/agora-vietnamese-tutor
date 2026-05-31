@@ -23,11 +23,11 @@ export function QuickstartPreCallCard({
       }}
     >
       <h1 className="text-[28px] font-medium leading-[1.2] text-white">
-        Luyện tiếng Việt cùng AI
+        Luyện tiếng Việt và tiếng Anh cùng AI
       </h1>
       <p className="mt-[14px] text-sm font-medium leading-6 text-muted-foreground">
         Một gia sư giọng nói thân thiện giúp bạn luyện nghe, nói, và phản xạ
-        tiếng Việt tự nhiên.
+        bằng tiếng Việt, với hỗ trợ tiếng Anh khi cần.
       </p>
 
       <Button
@@ -36,17 +36,17 @@ export function QuickstartPreCallCard({
         className="mt-12 h-10 w-full rounded-lg border border-primary bg-primary text-sm font-medium text-black hover:border-white hover:bg-white hover:text-black disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-black"
         aria-label={
           isLoading
-            ? 'Starting conversation with AI agent'
-            : 'Bắt đầu luyện nói tiếng Việt'
+            ? 'Đang bắt đầu cuộc trò chuyện / Starting conversation with AI agent'
+            : 'Bắt đầu luyện tiếng Việt và tiếng Anh'
         }
       >
         {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Starting...
+            Đang bắt đầu / Starting...
           </>
         ) : (
-          'Bắt đầu luyện'
+          'Bắt đầu luyện / Start'
         )}
       </Button>
       {error && <p className="mt-3 text-xs text-destructive">{error}</p>}

@@ -8,9 +8,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Vietnamese Voice Tutor',
+  title: 'Vietnamese + English Voice Tutor',
   description:
-    'Next.js voice tutor for practicing Vietnamese with live transcript, streaming audio, and low-latency Agora Conversational AI.',
+    'Next.js bilingual voice tutor for practicing Vietnamese and English with live transcript, streaming audio, and low-latency Agora Conversational AI.',
   icons: {
     icon: [
       { url: '/favicon.ico' },

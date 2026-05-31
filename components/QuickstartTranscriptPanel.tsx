@@ -46,12 +46,12 @@ export function QuickstartTranscriptPanel({
   return (
     <section
       className="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border border-border bg-card/20"
-      aria-label="Transcription panel"
+      aria-label="Bảng chép lời / Transcription panel"
     >
-      <div className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 px-5 py-4">
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Transcript</h2>
-          <p className="text-xs text-muted-foreground">Live voice turns</p>
+          <h2 className="text-sm font-semibold text-foreground">Bản chép lời / Transcript</h2>
+          <p className="text-xs text-muted-foreground">Đối thoại trực tiếp / Live voice turns</p>
         </div>
       </div>
 
@@ -61,12 +61,12 @@ export function QuickstartTranscriptPanel({
       >
         {messages.length === 0 ? (
           <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
-            Start speaking to see the live transcript here.
+            Bắt đầu nói để xem bản chép lời ở đây. / Start speaking to see the live transcript here.
           </div>
         ) : (
           messages.map((message, index) => {
             const isAgent = String(message.uid) === agentUID;
-            const label = isAgent ? 'Agent' : 'You';
+            const label = isAgent ? 'Mai / Agent' : 'Bạn / You';
             const text = message.text?.trim();
             const time = formatMessageTime(message.createdAt);
 

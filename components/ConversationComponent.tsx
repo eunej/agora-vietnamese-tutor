@@ -504,16 +504,18 @@ export default function ConversationComponent({
             />
             <div className="space-y-1">
               <div className="text-lg font-semibold text-foreground">
-                {isAgentConnected ? 'Mai is ready' : 'Waiting for Mai'}
+                {isAgentConnected
+                  ? 'Mai sẵn sàng / Mai is ready'
+                  : 'Đang chờ Mai / Waiting for Mai'}
               </div>
               <div className="text-sm text-muted-foreground">
                 {connectionState === 'CONNECTED'
-                  ? 'Connected and listening.'
+                  ? 'Đã kết nối và đang lắng nghe. / Connected and listening.'
                   : connectionState === 'CONNECTING'
-                    ? 'Connecting to the conversation...'
+                    ? 'Đang kết nối cuộc trò chuyện... / Connecting to the conversation...'
                     : connectionState === 'RECONNECTING'
-                      ? 'Reconnecting...'
-                      : 'Start the conversation to begin.'}
+                      ? 'Đang kết nối lại... / Reconnecting...'
+                      : 'Bắt đầu cuộc trò chuyện để luyện nói. / Start the conversation to begin.'}
               </div>
             </div>
             <div className="text-xs text-muted-foreground">
@@ -536,9 +538,9 @@ export default function ConversationComponent({
                 ? 'bg-primary text-primary-foreground hover:opacity-90'
                 : 'bg-muted text-foreground hover:bg-muted/80'
             }`}
-            aria-label={isEnabled ? 'Mute microphone' : 'Unmute microphone'}
+            aria-label={isEnabled ? 'Tắt mic / Mute microphone' : 'Bật mic / Unmute microphone'}
           >
-            {isEnabled ? 'Mute microphone' : 'Unmute microphone'}
+            {isEnabled ? 'Tắt mic / Mute' : 'Bật mic / Unmute'}
           </button>
           <MicrophoneSelector localMicrophoneTrack={localMicrophoneTrack} />
         </div>

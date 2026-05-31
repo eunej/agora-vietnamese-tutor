@@ -47,10 +47,10 @@ export function QuickstartConversationLayout({
             size="sm"
             className="h-8 rounded-md border border-destructive bg-transparent px-3 text-xs font-medium text-destructive hover:bg-destructive/10"
             onClick={onEndConversation}
-            aria-label="End conversation with AI agent"
-            title="End conversation"
+            aria-label="Kết thúc cuộc trò chuyện / End conversation with AI agent"
+            title="Kết thúc cuộc trò chuyện / End conversation"
           >
-            End Conversation
+            Kết thúc / End
           </Button>
         </div>
       </header>
