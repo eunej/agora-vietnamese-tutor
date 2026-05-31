@@ -8,6 +8,7 @@ import AgoraRTC, {
   useClientEvent,
   useJoin,
   usePublish,
+  RemoteUser,
   UID,
 } from 'agora-rtc-react';
 import {
@@ -466,86 +467,98 @@ export default function ConversationComponent({
     onEndConversation();
   }, [onEndConversation]);
 
+  const agentRemoteUser = useMemo(
+    () => remoteUsers.find((user) => user.uid.toString() === agentUID),
+    [remoteUsers, agentUID],
+  );
+
   return (
-    <QuickstartConversationLayout
-      statusPanel={
-        <ConnectionStatusPanel
-          connectionState={connectionState}
-          connectionSeverity={connectionSeverity}
-          connectionIssues={connectionIssues}
-          isOpen={isConnectionDetailsOpen}
-          onToggle={() => setIsConnectionDetailsOpen((open) => !open)}
-        />
-      }
-      pipelineMetrics={<QuickstartPipelineMetrics metrics={agentMetrics} />}
-      transcriptPanel={
-        <QuickstartTranscriptPanel
-          messageList={messageList}
-          currentInProgressMessage={currentInProgressMessage}
-          agentUID={agentUID}
-        />
-      }
-      visualizer={
-        <div
-          className="flex h-full min-h-[20rem] w-full max-w-4xl items-center justify-center"
-          role="region"
-          aria-label="AI agent status visualization"
-        >
-          <div className="flex flex-col items-center gap-4 rounded-3xl border border-border bg-card/60 px-8 py-10 text-center shadow-sm">
-            <div
-              className={`h-24 w-24 rounded-full border-4 ${
-                connectionState === 'CONNECTED' && isAgentConnected
-                  ? 'border-green-500 bg-green-500/10'
-                  : connectionState === 'RECONNECTING' || connectionState === 'CONNECTING'
-                    ? 'border-amber-500 bg-amber-500/10'
-                    : 'border-muted-foreground bg-muted/20'
-              }`}
-              aria-hidden="true"
-            />
-            <div className="space-y-1">
-              <div className="text-lg font-semibold text-foreground">
-                {isAgentConnected
-                  ? 'Mai sẵn sàng / Mai is ready'
-                  : 'Đang chờ Mai / Waiting for Mai'}
+    <div>
+      {agentRemoteUser ? (
+        <div aria-hidden="true" className="sr-only">
+          <RemoteUser user={agentRemoteUser} playAudio />
+        </div>
+      ) : null}
+      <QuickstartConversationLayout
+        statusPanel={
+          <ConnectionStatusPanel
+            connectionState={connectionState}
+            connectionSeverity={connectionSeverity}
+            connectionIssues={connectionIssues}
+            isOpen={isConnectionDetailsOpen}
+            onToggle={() => setIsConnectionDetailsOpen((open) => !open)}
+          />
+        }
+        pipelineMetrics={<QuickstartPipelineMetrics metrics={agentMetrics} />}
+        transcriptPanel={
+          <QuickstartTranscriptPanel
+            messageList={messageList}
+            currentInProgressMessage={currentInProgressMessage}
+            agentUID={agentUID}
+          />
+        }
+        visualizer={
+          <div
+            className="flex h-full min-h-[20rem] w-full max-w-4xl items-center justify-center"
+            role="region"
+            aria-label="AI agent status visualization"
+          >
+            <div className="flex flex-col items-center gap-4 rounded-3xl border border-border bg-card/60 px-8 py-10 text-center shadow-sm">
+              <div
+                className={`h-24 w-24 rounded-full border-4 ${
+                  connectionState === 'CONNECTED' && isAgentConnected
+                    ? 'border-green-500 bg-green-500/10'
+                    : connectionState === 'RECONNECTING' || connectionState === 'CONNECTING'
+                      ? 'border-amber-500 bg-amber-500/10'
+                      : 'border-muted-foreground bg-muted/20'
+                }`}
+                aria-hidden="true"
+              />
+              <div className="space-y-1">
+                <div className="text-lg font-semibold text-foreground">
+                  {isAgentConnected
+                    ? 'Mai sẵn sàng / Mai is ready'
+                    : 'Đang chờ Mai / Waiting for Mai'}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {connectionState === 'CONNECTED'
+                    ? 'Đã kết nối và đang lắng nghe. / Connected and listening.'
+                    : connectionState === 'CONNECTING'
+                      ? 'Đang kết nối cuộc trò chuyện... / Connecting to the conversation...'
+                      : connectionState === 'RECONNECTING'
+                        ? 'Đang kết nối lại... / Reconnecting...'
+                        : 'Bắt đầu cuộc trò chuyện để luyện nói. / Start the conversation to begin.'}
+                </div>
               </div>
-              <div className="text-sm text-muted-foreground">
-                {connectionState === 'CONNECTED'
-                  ? 'Đã kết nối và đang lắng nghe. / Connected and listening.'
-                  : connectionState === 'CONNECTING'
-                    ? 'Đang kết nối cuộc trò chuyện... / Connecting to the conversation...'
-                    : connectionState === 'RECONNECTING'
-                      ? 'Đang kết nối lại... / Reconnecting...'
-                      : 'Bắt đầu cuộc trò chuyện để luyện nói. / Start the conversation to begin.'}
+              <div className="text-xs text-muted-foreground">
+                Current agent state: {visualizerState}
               </div>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              Current agent state: {visualizerState}
             </div>
           </div>
-        </div>
-      }
-      controls={
-        <div
-          className="mx-auto flex w-fit flex-wrap items-center gap-3 rounded-full border border-border bg-card/80 px-4 py-2 backdrop-blur-md"
-          role="group"
-          aria-label="Audio controls"
-        >
-          <button
-            type="button"
-            onClick={handleMicToggle}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-              isEnabled
-                ? 'bg-primary text-primary-foreground hover:opacity-90'
-                : 'bg-muted text-foreground hover:bg-muted/80'
-            }`}
-            aria-label={isEnabled ? 'Tắt mic / Mute microphone' : 'Bật mic / Unmute microphone'}
+        }
+        controls={
+          <div
+            className="mx-auto flex w-fit flex-wrap items-center gap-3 rounded-full border border-border bg-card/80 px-4 py-2 backdrop-blur-md"
+            role="group"
+            aria-label="Audio controls"
           >
-            {isEnabled ? 'Tắt mic / Mute' : 'Bật mic / Unmute'}
-          </button>
-          <MicrophoneSelector localMicrophoneTrack={localMicrophoneTrack} />
-        </div>
-      }
-      onEndConversation={handleEndConversation}
-    />
+            <button
+              type="button"
+              onClick={handleMicToggle}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                isEnabled
+                  ? 'bg-primary text-primary-foreground hover:opacity-90'
+                  : 'bg-muted text-foreground hover:bg-muted/80'
+              }`}
+              aria-label={isEnabled ? 'Tắt mic / Mute microphone' : 'Bật mic / Unmute microphone'}
+            >
+              {isEnabled ? 'Tắt mic / Mute' : 'Bật mic / Unmute'}
+            </button>
+            <MicrophoneSelector localMicrophoneTrack={localMicrophoneTrack} />
+          </div>
+        }
+        onEndConversation={handleEndConversation}
+      />
+    </div>
   );
 }
