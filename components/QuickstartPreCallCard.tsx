@@ -23,11 +23,11 @@ export function QuickstartPreCallCard({
       }}
     >
       <h1 className="text-[28px] font-medium leading-[1.2] text-white">
-        Try Agora&apos;s Voice Agent
+        Luyện tiếng Việt cùng AI
       </h1>
       <p className="mt-[14px] text-sm font-medium leading-6 text-muted-foreground">
-        Built on Agora&apos;s flagship Conversational AI engine, for effortless
-        agentic conversations.
+        Một gia sư giọng nói thân thiện giúp bạn luyện nghe, nói, và phản xạ
+        tiếng Việt tự nhiên.
       </p>
 
       <Button
@@ -37,7 +37,7 @@ export function QuickstartPreCallCard({
         aria-label={
           isLoading
             ? 'Starting conversation with AI agent'
-            : 'Start conversation with AI agent'
+            : 'Bắt đầu luyện nói tiếng Việt'
         }
       >
         {isLoading ? (
@@ -46,7 +46,7 @@ export function QuickstartPreCallCard({
             Starting...
           </>
         ) : (
-          'Start Conversation'
+          'Bắt đầu luyện'
         )}
       </Button>
       {error && <p className="mt-3 text-xs text-destructive">{error}</p>}

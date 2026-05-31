@@ -1,7 +1,7 @@
 {
   "name": "convoai-quickstart-web-nextjs",
   "version": "0.1.0",
-  "description": "Next.js quickstart for building conversational AI applications with Agora's Conversational AI Engine",
+  "description": "Next.js quickstart for building a Vietnamese AI voice tutor with Agora's Conversational AI Engine",
   "private": true,
   "engines": {
     "node": ">=22"
